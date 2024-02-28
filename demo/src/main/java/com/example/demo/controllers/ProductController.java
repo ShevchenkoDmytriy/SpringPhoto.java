@@ -35,12 +35,6 @@ public class ProductController {
         return "add-product";
     }
 
-    @PostMapping("/products/add")
-    public String addProductSubmit(@ModelAttribute Product product) {
-        productService.addProduct(product);
-        return "redirect:/";
-    }
-
     @GetMapping("/products/{id}/edit")
     public String editProductForm(@PathVariable int id, Model model) {
         Product product = productService.getProductById(id);
@@ -57,6 +51,11 @@ public class ProductController {
     @PostMapping("/products/{id}/delete")
     public String deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
+        return "redirect:/";
+    }
+    @PostMapping("/products/add")
+    public String addProductSubmit(@ModelAttribute Product product, @RequestParam("images") List<MultipartFile> images) throws IOException {
+        productService.addProduct(product, images);
         return "redirect:/";
     }
 }

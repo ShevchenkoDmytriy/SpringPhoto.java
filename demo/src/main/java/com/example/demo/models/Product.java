@@ -1,7 +1,11 @@
 package com.example.demo.models;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -10,24 +14,23 @@ import lombok.*;
 @NoArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "price")
     private int price;
 
-    @Column(name = "city")
     private String city;
 
-    @Column(name = "author")
     private String author;
-}
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private List<Image> images;
+
+    // Конструктори, геттери та сеттери
+}
 
